@@ -1,0 +1,16 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+token*.json
+client_secret*.json
+credentials*.json
+secrets/
+node_modules/
+dist/
+.wrangler/
+*.log
