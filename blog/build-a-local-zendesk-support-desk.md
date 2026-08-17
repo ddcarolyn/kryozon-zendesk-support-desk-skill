@@ -31,7 +31,7 @@ AI 回复不是直接发送。页面保留两个框：上方输入一次性修�
 
 在另一台电脑上，Codex 可以读取 Skill 后先检查环境，再逐步搭建，而不是机械执行一组可能已经过时的命令。
 
-GitHub：[KryoZon Zendesk Support Desk Skill](https://github.com/Carolynyuanyuan/kryozon-zendesk-support-desk-skill)
+GitHub：[KryoZon Zendesk Support Desk Skill](https://github.com/darkfireoffancy1/kryozon-zendesk-support-desk-skill)
 
 ## 核心架构
 
