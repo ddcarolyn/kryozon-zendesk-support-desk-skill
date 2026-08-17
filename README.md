@@ -5,7 +5,7 @@ A reusable Codex Skill for building a local-first, Zendesk-style customer suppor
 ## Install on another computer
 
 ```bash
-git clone https://github.com/darkfireoffancy1/kryozon-zendesk-support-desk-skill.git
+git clone https://github.com/ddcarolyn/kryozon-zendesk-support-desk-skill.git
 mkdir -p ~/.codex/skills
 cp -R kryozon-zendesk-support-desk-skill/zendesk-support-desk-builder ~/.codex/skills/
 ```
