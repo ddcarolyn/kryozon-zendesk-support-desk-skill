@@ -1,4 +1,4 @@
 interface:
   display_name: "Zendesk Support Desk Builder"
-  short_description: "Build a local-first Gmail and Shopify support desk"
-  default_prompt: "Use $zendesk-support-desk-builder to deploy a secure local customer support desk on this computer."
+  short_description: "Build and maintain a Gmail-Shopify support desk"
+  default_prompt: "Use $zendesk-support-desk-builder to build, update, or continuously distill the secure customer support desk."
