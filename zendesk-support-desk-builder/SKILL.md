@@ -1,6 +1,6 @@
 ---
 name: zendesk-support-desk-builder
-description: Build, migrate, or repair a secure local-first Zendesk-style customer support desk that combines Gmail threads, Shopify customers and orders, policy knowledge, AI summaries, editable multilingual reply drafts, case status, and optional Cloudflare deployment. Use when Codex needs to create the support app on a new computer, reproduce the KryoZon support workflow, configure Gmail OAuth and a support send-as alias, connect Shopify read-only data, add DeepSeek-assisted analysis, or diagnose missing synchronization and ticket-count mismatches.
+description: Build, migrate, repair, or continuously distill a secure local-first Zendesk-style customer support desk that combines Gmail threads, Shopify customers and orders, policy knowledge, AI summaries, editable multilingual reply drafts, Case status, last-mile logistics alerts, and optional Cloudflare deployment. Use when Codex needs to create the support app on a new computer, reproduce or update the KryoZon support workflow from Obsidian and source changes, configure Gmail OAuth and a support send-as alias, connect Shopify read-only data, add DeepSeek-assisted analysis, or diagnose missing synchronization and ticket-count mismatches.
 ---
 
 # Zendesk Support Desk Builder
@@ -16,6 +16,7 @@ Build the system as a customer-support workflow, not as a generic mailbox viewer
 5. Default every external integration to least privilege.
 6. Never send an email, alter an order, publish, or deploy without explicit user approval.
 7. Never print or commit credential values.
+8. Treat the Obsidian requirements document and current production source as the living source of truth; update this Skill when verified behavior changes.
 
 ## Build workflow
 
@@ -28,6 +29,8 @@ Ask whether to build:
 - Both: implement the local edition first, then port the storage and API boundary to Workers/D1.
 
 Read [architecture.md](references/architecture.md) before choosing dependencies or database tables.
+
+When updating an existing KryoZon installation, also read [production-lessons.md](references/production-lessons.md) before changing Gmail queries, status persistence, logistics workflows, or scheduled synchronization.
 
 ### 2. Run the preflight check
 
@@ -119,8 +122,14 @@ Reply into the original Gmail thread using `threadId`, `In-Reply-To`, `Reference
 
 Use [acceptance-checklist.md](references/acceptance-checklist.md). Compare source Gmail counts, matched Shopify customer counts, stored Cases, and UI totals. Test at least one Open, Pending, Solved, multilingual, and unmatched thread. Never claim completion from a successful build alone.
 
+Also test one automatic reply, one manual status override, and one last-mile logistics alert containing both an original and transferred tracking number.
+
 ### 10. Deploy only after approval
 
 For Cloudflare, keep account IDs, database IDs, OAuth secrets, encryption keys, Shopify credentials, and AI keys in platform secrets or local environment variables. Protect `/support` with Cloudflare Access and an application-level authorized-email check.
 
 Read [deployment-playbook.md](references/deployment-playbook.md) for the exact local-to-online sequence.
+
+## Maintain the Skill from the living project
+
+Read [continuous-distillation.md](references/continuous-distillation.md) before creating a scheduled update. Run `python3 scripts/audit_source.py <project-dir>` to produce a non-secret source manifest. Review actual source changes and requirements notes, update only durable behavior in the Skill, validate it, scan for secrets, and commit. Never let an unattended job deploy the production app or publish customer data.
