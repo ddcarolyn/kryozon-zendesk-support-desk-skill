@@ -56,7 +56,6 @@ def main() -> int:
 
     output = {
         "project_name": root.name,
-        "generated_utc": datetime.now(timezone.utc).isoformat(),
         "file_count": len(files),
         "files": files,
     }

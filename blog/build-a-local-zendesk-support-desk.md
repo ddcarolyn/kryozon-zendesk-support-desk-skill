@@ -43,6 +43,10 @@ GitHub：[KryoZon Zendesk Support Desk Skill](https://github.com/ddcarolyn/kryoz
 
 同步必须采用幂等 upsert：即使某次 Gmail 请求失败或只返回一部分线程，也不能把已有 Case 清空。这是从“能跑的 Demo”变成“可靠客服系统”最重要的一条规则。
 
+本地版和线上版也不能各写一套筛选逻辑。现在的做法是把 Gmail 排除规则、Shopify 邮箱匹配、自动回复识别、Case 状态和游标推进放进共享核心，再由 SQLite 和 D1 提供不同的存储适配器。验收时会比较双方的 thread ID、邮箱、主题、状态和更新时间，而不是只看总数是否相等。
+
+新 Case 或客户重新回复时，系统还可以向飞书发送一次去重提醒，包含中文摘要、紧急程度、建议动作和在线 Case 链接。飞书只承担“叫醒客服”的职责，不能替 Carolyn 给客户发邮件。
+
 ## 权限与安全
 
 Gmail 只使用两个最小权限：

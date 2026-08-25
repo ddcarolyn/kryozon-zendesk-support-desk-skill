@@ -21,6 +21,7 @@ Restart Codex, then copy the prompt from [COMPANY-COMPUTER-PROMPT.md](COMPANY-CO
 - DeepSeek summary, advice, translation, and editable draft contract
 - Security boundaries and cross-device deployment playbook
 - Acceptance checklist that compares source, database, and UI counts
+- Shared local/online synchronization rules, Case-level parity checks, and deduplicated Feishu reminders
 
 ## Security
 
