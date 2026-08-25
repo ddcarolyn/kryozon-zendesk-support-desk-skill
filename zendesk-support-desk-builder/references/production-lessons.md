@@ -45,3 +45,10 @@ Support a separate operator workflow for pasted last-mile exception notices:
 - Make Case status editable for Open, Pending, On-hold, Needs Review, and Closed.
 - Show sender, recipient, result, error, and time in Activity.
 - Keep the two-field AI interaction: temporary instruction and editable final reply.
+
+## Local/online parity and reminders
+
+- Do not maintain separate Gmail filters or status rules for SQLite and D1. Put them behind shared business logic with storage adapters.
+- Verify parity by diffing stable Case fields in both directions; a total such as “20 vs 20” can still hide different Cases.
+- Notify Feishu only after a Case is durably stored as newly Open or reopened. Deduplicate by Gmail thread plus latest message/update revision.
+- AI analysis or Feishu failure must be observable but must not erase or hide the underlying Case.

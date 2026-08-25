@@ -8,6 +8,8 @@
 - UI totals equal database totals for each status.
 - Re-running sync does not duplicate or remove Cases.
 - A failed page can resume without starting over.
+- Local and online exports have the same Case IDs and matching customer, subject, status, and update fields.
+- Every local-only, online-only, or mismatched Case is listed and explained; equal totals are not accepted as proof.
 
 ## Workflow
 
@@ -17,6 +19,14 @@
 - AI instruction input is cleared after generation.
 - Final reply remains directly editable.
 - Status views and right-side customer/order/knowledge/activity tabs work.
+- Shopify Orders and Knowledge Base open as functional modules rather than decorative navigation.
+
+## Notifications
+
+- A newly Open or reopened Case creates one Feishu alert with customer, order, Chinese summary, urgency, next action, and Case link.
+- Re-running the same sync does not send the same alert again.
+- Notification failure is recorded and does not roll back the Case sync.
+- Feishu cannot trigger or send a customer email.
 
 ## Sending
 

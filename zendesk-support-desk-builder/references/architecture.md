@@ -32,6 +32,12 @@ Policy knowledge ─────────────────────
 - Access: Cloudflare Access allowlist plus an application-level mailbox check.
 - Sync: scheduled Worker plus manual refresh.
 
+## Shared production core
+
+Local and online editions may use different storage adapters, but must call the same pure rules for Gmail exclusions, normalized participant extraction, Shopify matching, automatic-reply detection, Case status, and cursor advancement. Treat the cloud database as the production fact source and the local app as an operator/development client unless a test database is explicitly selected.
+
+Expose a non-secret consistency export containing only stable Case comparison fields: thread ID, normalized customer email, subject, status, and update time. Diff both directions and report field mismatches. Never accept equal totals as proof of equality.
+
 ## Core tables
 
 - `gmail_threads`: thread ID, subject, participants, last message ID, timestamps, latest sender, raw sync metadata.
@@ -42,6 +48,7 @@ Policy knowledge ─────────────────────
 - `activities`: Case ID, action type, actor, timestamp, non-secret metadata.
 - `sync_state`: source, cursor/history ID, started/finished timestamps, counts, error.
 - `send_attempts`: request ID, Case/draft revision, body hash, status, Gmail message ID.
+- `notification_attempts`: Case/message revision, channel, status, error, and sent time for deduplicated operator alerts.
 
 ## Matching policy
 
