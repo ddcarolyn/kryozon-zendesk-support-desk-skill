@@ -5,6 +5,8 @@
 - Shopify customer and order pagination completes.
 - Gmail backfill reaches the configured baseline date.
 - Every visible Case matches a Shopify email.
+- A Shopify customer without an order is visible as pre-sales; a customer with an order is visible as after-sales.
+- A genuine human message routed to the support alias but unmatched in Shopify is excluded.
 - UI totals equal database totals for each status.
 - Re-running sync does not duplicate or remove Cases.
 - A failed page can resume without starting over.
@@ -44,3 +46,4 @@
 - Shopify code contains no mutation.
 - Application is inaccessible outside the approved identity list.
 - Logs contain no OAuth refresh token or API key.
+- When the local workstation uses a macOS HTTPS proxy, local Gmail, Shopify, and AI connectivity works without logging proxy credentials; Cloudflare behavior remains unchanged.

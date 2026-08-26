@@ -6,6 +6,8 @@ Authenticate the primary Google Workspace mailbox owner. Treat `support@kryozon.
 
 Do not require historical threads to contain the support alias. Historical customer conversations may have used the primary address. Read eligible non-marketing threads from the primary mailbox, then apply the Shopify email match in the business layer. Requiring `{to:support from:support}` caused valid Shopify customers to disappear from the online edition.
 
+The inverse is also unsafe: delivery to the support alias does not make an unmatched sender eligible. Current requirements admit registered Shopify customers without orders as pre-sales and customers with orders as after-sales, while excluding correspondents that match neither Shopify source. Treat a source-only experiment that admits unmatched support-routed mail as rule drift until the requirements explicitly change.
+
 ## Backfill and incremental synchronization
 
 - Backfill from 2026-03-01 through every Gmail page.
@@ -52,3 +54,9 @@ Support a separate operator workflow for pasted last-mile exception notices:
 - Verify parity by diffing stable Case fields in both directions; a total such as “20 vs 20” can still hide different Cases.
 - Notify Feishu only after a Case is durably stored as newly Open or reopened. Deduplicate by Gmail thread plus latest message/update revision.
 - AI analysis or Feishu failure must be observable but must not erase or hide the underlying Case.
+
+## Local network proxy behavior
+
+The browser using a macOS system HTTPS proxy does not prove that Node's Undici-based `fetch` can reach Gmail, Shopify, or the AI provider. Prefer explicit proxy environment configuration. When it is absent, the local edition may read the enabled macOS HTTPS proxy and configure an Undici dispatcher before making external requests. Never log proxy credentials or persist the discovered proxy endpoint in the Skill.
+
+Keep this adaptation local-only. Cloudflare Workers use their platform network path and must not inherit workstation proxy behavior.
