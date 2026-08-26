@@ -11,7 +11,7 @@ Build the system as a customer-support workflow, not as a generic mailbox viewer
 
 1. Treat Gmail threads as the source of Case conversations.
 2. Treat Shopify as the source of customer and order facts.
-3. Show only Gmail correspondents whose email exists in Shopify customers or orders.
+3. Show only Gmail correspondents whose normalized email exists in Shopify customers or orders. A message routed to the support alias is not sufficient by itself.
 4. Keep local and online editions logically equivalent, but never share local token files or SQLite databases through Git.
 5. Put Gmail filtering, Shopify matching, Case classification, and sync cursor rules in one shared core used by both editions.
 6. Default every external integration to least privilege.
@@ -67,6 +67,7 @@ Follow [integration-contracts.md](references/integration-contracts.md).
 - Gmail: request `gmail.readonly` and, only when sending is enabled, `gmail.send`.
 - Shopify: use read-only GraphQL queries for customers, orders, products, fulfillment, and tracking.
 - Normalize email addresses to lowercase.
+- Treat a Shopify customer with no order as pre-sales and a customer with an order as after-sales. Exclude support-routed correspondents that match neither source.
 - Sync from the configured baseline date, then incrementally update by Gmail history or recent updated timestamps.
 - Do not delete stored Cases merely because a partial sync returns fewer threads.
 - Upsert by stable Gmail `threadId` and Shopify object IDs.

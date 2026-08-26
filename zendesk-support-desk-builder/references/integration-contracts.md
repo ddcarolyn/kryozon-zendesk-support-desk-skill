@@ -16,9 +16,12 @@ Use `access_type=offline`, `include_granted_scopes=true`, state validation, and 
 - Initial backfill: configured baseline date.
 - Incremental sync: Gmail history ID when available; otherwise a bounded recent-window query with idempotent upserts.
 - Exclude newsletters, marketing, automated Shopify notifications, internal mail, and system notices.
+- Apply Shopify eligibility after Gmail retrieval: a normalized external email must match a Shopify customer or order. Delivery to the support alias is routing evidence, not an eligibility override.
 - Fetch complete threads, not only the latest message.
 - Persist progress after each page.
 - Display sync phase, scanned count, matched count, excluded count, and error details.
+
+Classify an eligible Shopify customer with no order as pre-sales and one with an order as after-sales. Keep unmatched support-routed mail out of the Case set unless the requirements explicitly change.
 
 ## Gmail reply construction
 
