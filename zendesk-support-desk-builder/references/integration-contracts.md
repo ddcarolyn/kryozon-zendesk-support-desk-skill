@@ -20,8 +20,25 @@ Use `access_type=offline`, `include_granted_scopes=true`, state validation, and 
 - Fetch complete threads, not only the latest message.
 - Persist progress after each page.
 - Display sync phase, scanned count, matched count, excluded count, and error details.
+- When Shopify and Gmail run in one sync cycle, complete the Shopify refresh first so email eligibility and Case type use the newest available read-only customer and order snapshot.
 
 Classify an eligible Shopify customer with no order as pre-sales and one with an order as after-sales. Keep unmatched support-routed mail out of the Case set unless the requirements explicitly change.
+
+## Pre-sales FAQ classification
+
+Run FAQ classification only after Shopify eligibility has been established and only for pre-sales Cases with no matched order. Use a fixed identifier set:
+
+- `vat_invoice`
+- `product_selection`
+- `compatibility`
+- `shipping`
+- `discount`
+- `availability`
+- `other`
+
+Store the category and bounded confidence independently from the Chinese summary, advice, customer language, and editable reply draft. Heuristics may provide an initial category and AI may refine it through structured output, but neither path may admit an unmatched sender or create an outbound email.
+
+Expose the same FAQ rule shape locally and online: identifier, label, description, reviewed template, recognition-enabled flag, automatic-send flag, and timestamps. A rule update may change the reviewed template and recognition flag, but it must always persist `auto_send=false`. Automatic sending requires a separate explicitly approved workflow and must not be coupled to saving a template or toggling recognition.
 
 ## Gmail reply construction
 

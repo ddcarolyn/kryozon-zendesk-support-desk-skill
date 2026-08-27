@@ -10,6 +10,7 @@
 - UI totals equal database totals for each status.
 - Re-running sync does not duplicate or remove Cases.
 - A failed page can resume without starting over.
+- A combined sync refreshes Shopify before Gmail classification.
 - Local and online exports have the same Case IDs and matching customer, subject, status, and update fields.
 - Every local-only, online-only, or mismatched Case is listed and explained; equal totals are not accepted as proof.
 
@@ -22,6 +23,9 @@
 - Final reply remains directly editable.
 - Status views and right-side customer/order/knowledge/activity tabs work.
 - Shopify Orders and Knowledge Base open as functional modules rather than decorative navigation.
+- The FAQ dashboard count equals the visible eligible pre-sales Case set and excludes every unmatched support-routed sender.
+- Every pre-sales FAQ category is one of `vat_invoice`, `product_selection`, `compatibility`, `shipping`, `discount`, `availability`, or `other`; after-sales Cases have no pre-sales FAQ category.
+- Saving a FAQ template or toggling recognition keeps automatic sending off and sends no customer email.
 
 ## Notifications
 

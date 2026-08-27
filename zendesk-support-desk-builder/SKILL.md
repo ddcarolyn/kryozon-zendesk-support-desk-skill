@@ -66,6 +66,7 @@ Follow [integration-contracts.md](references/integration-contracts.md).
 
 - Gmail: request `gmail.readonly` and, only when sending is enabled, `gmail.send`.
 - Shopify: use read-only GraphQL queries for customers, orders, products, fulfillment, and tracking.
+- In a combined sync, refresh Shopify before Gmail so Case eligibility and pre-sales/after-sales classification use the newest available customer and order facts.
 - Normalize email addresses to lowercase.
 - Treat a Shopify customer with no order as pre-sales and a customer with an order as after-sales. Exclude support-routed correspondents that match neither source.
 - Sync from the configured baseline date, then incrementally update by Gmail history or recent updated timestamps.
@@ -89,6 +90,8 @@ Place an editable composer below the conversation. Keep exactly two AI fields:
 
 Do not display or retain an AI chat transcript. Generate Chinese Case summaries and recommended actions. Draft the customer reply in the customer's language.
 
+Provide a pre-sales FAQ dashboard for already eligible Shopify customers without orders. Show category counts, recent pre-sales Cases, recognition controls, and editable reviewed templates. Recognition being enabled must never imply that automatic sending is enabled.
+
 ### 6. Apply Case rules
 
 - Open: the latest meaningful external message is from the customer and no later effective company reply exists.
@@ -98,6 +101,10 @@ Do not display or retain an AI chat transcript. Generate Chinese Case summaries 
 - Needs review: classification is ambiguous or facts conflict.
 
 Reopen Pending or Solved Cases when a customer sends a new meaningful reply.
+
+Classify eligible pre-sales Cases into a small fixed taxonomy such as VAT/invoice, product selection, compatibility, shipping, discount, availability, or other. Store the category and confidence separately from the reply draft. After-sales Cases do not receive a pre-sales FAQ category.
+
+Keep FAQ automatic sending off by default. Saving or enabling a recognition rule must force `auto_send` to remain false. Enabling any future automatic send path requires a separate reviewed change and explicit user approval; a template edit alone can never send customer email.
 
 For each newly opened or reopened Case, optionally send one deduplicated Feishu reminder containing the customer, order, Chinese summary, urgency, recommended action, and online Case link. Feishu is notification-only and must never send customer email.
 

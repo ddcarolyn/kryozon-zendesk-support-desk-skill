@@ -24,6 +24,12 @@ Detect automatic replies from subject prefixes and `Auto-Submitted` headers. Exc
 
 Persist a manual status override together with the timestamp of the message on which it was based. Keep the override while the thread is unchanged. Remove it when a newer message arrives so the Case can be classified again.
 
+## Pre-sales FAQ rules
+
+Build FAQ reporting on top of the Shopify eligibility boundary, not on Gmail routing. Only eligible Shopify customers without orders can enter the pre-sales FAQ dashboard; a support-routed sender that matches neither Shopify customers nor orders remains excluded.
+
+Keep recognition and sending as separate controls. A rule's enabled flag may participate in categorization, while its automatic-send flag remains false whenever a template or recognition setting is saved. This prevents an operator maintaining a draft template from accidentally authorizing customer email.
+
 ## Last-mile logistics alert workflow
 
 Support a separate operator workflow for pasted last-mile exception notices:
