@@ -24,6 +24,12 @@ Detect automatic replies from subject prefixes and `Auto-Submitted` headers. Exc
 
 Persist a manual status override together with the timestamp of the message on which it was based. Keep the override while the thread is unchanged. Remove it when a newer message arrives so the Case can be classified again.
 
+## Connector isolation and bounded Shopify writes
+
+Treat a combined refresh as an ordered pair of independently observable stages: Shopify first, then Gmail. Store each stage's last success, error, and result separately. A Shopify failure must not discard Gmail progress for already known eligible customers, and a Gmail failure must not discard a successful Shopify refresh. Keep the overall cycle visibly incomplete when either stage fails; otherwise an operator can mistake stale eligibility data for a clean full sync.
+
+Cloudflare/D1 synchronization should compare incoming Shopify objects with the durable snapshot and skip unchanged rows before spending writes. Use a bounded write budget per invocation, count records deferred by that budget, and report `complete=false` until later idempotent cycles have persisted every changed record. Do not delete or hide existing orders or Cases while deferred work remains.
+
 ## Pre-sales FAQ rules
 
 Build FAQ reporting on top of the Shopify eligibility boundary, not on Gmail routing. Only eligible Shopify customers without orders can enter the pre-sales FAQ dashboard; a support-routed sender that matches neither Shopify customers nor orders remains excluded.

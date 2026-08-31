@@ -67,12 +67,15 @@ Follow [integration-contracts.md](references/integration-contracts.md).
 - Gmail: request `gmail.readonly` and, only when sending is enabled, `gmail.send`.
 - Shopify: use read-only GraphQL queries for customers, orders, products, fulfillment, and tracking.
 - In a combined sync, refresh Shopify before Gmail so Case eligibility and pre-sales/after-sales classification use the newest available customer and order facts.
+- Run Shopify and Gmail as independently observable stages. Preserve a successful stage when the other fails, record each source's error and last-success time, and do not report the combined cycle as fully complete unless both required stages succeed.
+- For the online edition, make Shopify upserts change-aware and enforce a bounded per-invocation write budget. Report deferred changes and continue them in later cycles instead of dropping them or claiming completeness.
 - Normalize email addresses to lowercase.
 - Treat a Shopify customer with no order as pre-sales and a customer with an order as after-sales. Exclude support-routed correspondents that match neither source.
 - Sync from the configured baseline date, then incrementally update by Gmail history or recent updated timestamps.
 - Do not delete stored Cases merely because a partial sync returns fewer threads.
 - Upsert by stable Gmail `threadId` and Shopify object IDs.
 - Record sync cursors, counts, timestamps, and failures.
+- Show source-specific Shopify and Gmail sync health in the workspace, including the latest durable Shopify result, deferred-change count, and whether the current cycle is complete.
 - Generate a Case-level consistency report between local and online editions using thread ID, customer email, subject, status, and update time. A matching total alone is not sufficient.
 
 ### 5. Build the Zendesk-style workspace

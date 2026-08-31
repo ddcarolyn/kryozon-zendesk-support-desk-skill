@@ -21,6 +21,7 @@ Use `access_type=offline`, `include_granted_scopes=true`, state validation, and 
 - Persist progress after each page.
 - Display sync phase, scanned count, matched count, excluded count, and error details.
 - When Shopify and Gmail run in one sync cycle, complete the Shopify refresh first so email eligibility and Case type use the newest available read-only customer and order snapshot.
+- Isolate connector failures. Persist Shopify and Gmail last-success times and errors separately; a failure in one stage must not roll back or suppress successful work from the other stage. If Gmail proceeds after a Shopify failure, classify only against the last durable Shopify snapshot and surface that the combined result is stale or incomplete.
 
 Classify an eligible Shopify customer with no order as pre-sales and one with an order as after-sales. Keep unmatched support-routed mail out of the Case set unless the requirements explicitly change.
 
@@ -60,6 +61,8 @@ Use Admin GraphQL read queries only. Retrieve:
 - totals: amount and currency
 
 Never include mutation operations. Page through all results and persist the page cursor.
+
+Compare fetched objects with the stored snapshot before writing. Skip unchanged customers and orders. When the online runtime needs a per-invocation D1 write budget, return changed, unchanged, deferred, page, and completion counts; keep the cycle incomplete while any changed record is deferred, then retry idempotently on a later scheduled or manual cycle.
 
 ## AI provider
 
